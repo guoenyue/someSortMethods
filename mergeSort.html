@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>mergeSort</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*
+			*归并排序--这是一种效率蛮高的排序方式，开发中很常用到
+			是将一个大数组分成粒度很小的单个数组再排序连成一个完整
+			的排序后的数组
+		*/
+
+
+		var mergeSortRec=function(arr){
+			var len=arr.length;
+			if(len==1)return arr;
+
+			var mid=Math.floor(len/2);
+			var left=arr.slice(0,mid);
+			var right=arr.slice(mid,len);
+
+			return mergeSort(mergeSortRec(left),mergeSortRec(right));
+		}
+
+		var mergeSort=function(left,right){
+			var res=[];//默认返回值
+			var ir=0;//左侧数组初始索引值
+			var il=0;//右侧数组初始索引值
+
+			while(left[il]&&right[ir]){
+				if(left[il]>right[ir]){
+					//将小值放到数组中，因为是用的push
+					res.push(right[ir++]);
+				}else{
+					res.push(left[il++]);
+				}
+			}
+			//进入此循环的条件是right数组已经遍历完毕，但left数组还有剩余元素没有进行合并
+			while(left[il]){
+				res.push(left[il++]);
+			}
+			//此处条件同上
+			while(right[ir]){
+				res.push(right[ir++]);
+			}
+			return res;
+		}
+
+		console.log(mergeSortRec([1,4,0,7,3,6,8,2,5,9]).toString());
+	</script>
+</body>
+</html>
