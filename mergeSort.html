@@ -20,16 +20,24 @@
 			var mid=Math.floor(len/2);
 			var left=arr.slice(0,mid);
 			var right=arr.slice(mid,len);
-
+			console.log("left",left.toString(),"right",right.toString());
 			return mergeSort(mergeSortRec(left),mergeSortRec(right));
+			//通过此处的公式将数组拆分二次递归产生排序好的小数组
 		}
-
+		/*
+			mergeSort([1,9,28,44,87],[2,4,6,8,10]);
+			如上参数是两个排完序的数组，直接放到mergeSort函数中，可以直接获得到排完序之后
+			的完整数组，而且每个数组内的数字的对应大小只需递增即可，两个数组互不牵扯。因为
+			在函数内部使用的是push(i++),基于这样的算法，只有添加的数组才会将指针向后移动一位
+			而没有填入新数组的那个数组的指针将继续保持，直到其数组内的指针对应的元素满足条件
+			被填入到新的数组中去才会将指针的状态更新。
+		*/
 		var mergeSort=function(left,right){
 			var res=[];//默认返回值
 			var ir=0;//左侧数组初始索引值
 			var il=0;//右侧数组初始索引值
 
-			while(left[il]&&right[ir]){
+			while(il<left.length&&ir<right.length){
 				if(left[il]>right[ir]){
 					//将小值放到数组中，因为是用的push
 					res.push(right[ir++]);
@@ -38,17 +46,20 @@
 				}
 			}
 			//进入此循环的条件是right数组已经遍历完毕，但left数组还有剩余元素没有进行合并
-			while(left[il]){
+			while(il<left.length){
 				res.push(left[il++]);
 			}
 			//此处条件同上
-			while(right[ir]){
+			while(ir<right.length){
 				res.push(right[ir++]);
 			}
+			console.log("res:",res);
 			return res;
 		}
 
 		console.log(mergeSortRec([1,4,0,7,3,6,8,2,5,9]).toString());
+
+
 	</script>
 </body>
 </html>
